@@ -1,4 +1,4 @@
-module event-api
+module github.com/Panji-Utama/event-api
 
 go 1.19
 
