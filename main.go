@@ -1,5 +1,7 @@
 package main
 
+//* CompileDaemon -command="./event-api" for hot reload 
+
 import (
 	"log"
 	"os"
@@ -23,7 +25,6 @@ func init() {
 
 	// Connect to DB
 	dsn := os.Getenv("DATABASE_URL")
-	// Use assignment operator = instead of :=
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Error connecting to database: %v", err)
@@ -41,18 +42,20 @@ func main() {
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"message": "ping pong hey",
-		})
-	})
-
-	r.GET("/events", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "ping pong hey",
+			"message": "Loh",
 		})
 	})
 
 	r.POST("/events", func(c *gin.Context) {
 		controllers.EventsCreate(c, db) // Pass db variable to EventsCreate
+	})
+	
+	r.GET("/events", func(c *gin.Context) {
+		controllers.EventsIndex(c, db)
+	})
+
+	r.GET("/events/:id", func(c *gin.Context) {
+		controllers.EventsShow(c, db)
 	})
 	
 	r.Run(":" + os.Getenv("PORT")) // Default :8080, take PORT from .env

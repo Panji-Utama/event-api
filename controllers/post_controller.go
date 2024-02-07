@@ -39,3 +39,39 @@ func EventsCreate(c *gin.Context, db *gorm.DB) {
 		"Event": event,
 	})
 }
+
+// Get All
+func EventsIndex(c *gin.Context, db *gorm.DB) {
+    var events []models.Event
+    if err := db.Find(&events).Error; err != nil {
+        c.JSON(500, gin.H{
+            "error": "Failed to retrieve events from the database",
+        })
+        return
+    }
+
+    c.JSON(200, gin.H{
+        "events": events,
+    })
+}
+
+// Get One
+func EventsShow(c *gin.Context, db *gorm.DB) {
+    // Get ID from URL
+    id := c.Param("id")
+
+    var event models.Event
+    if err := db.First(&event, id).Error; err != nil {
+        // If the event is not found, return a 404 Not Found error
+        c.JSON(404, gin.H{
+            "error": "Event not found",
+        })
+        return
+    }
+
+    // Return the event if found
+    c.JSON(200, gin.H{
+        "Result": event,
+    })
+}
+
