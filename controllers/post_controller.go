@@ -62,14 +62,12 @@ func EventsShow(c *gin.Context, db *gorm.DB) {
 
     var event models.Event
     if err := db.First(&event, id).Error; err != nil {
-        // If the event is not found, return a 404 Not Found error
         c.JSON(404, gin.H{
             "error": "Event not found",
         })
         return
     }
 
-    // Return the event if found
     c.JSON(200, gin.H{
         "Result": event,
     })
