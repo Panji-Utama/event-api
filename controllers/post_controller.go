@@ -73,3 +73,36 @@ func EventsShow(c *gin.Context, db *gorm.DB) {
     })
 }
 
+func EventsUpdate(c *gin.Context, db *gorm.DB) {
+    // Get ID from URL
+    id := c.Param("id")
+
+    var body struct {
+		Title string
+		Description string 
+		DateTime time.Time 
+		Location string 
+	}
+
+	c.Bind(&body)
+
+	var event models.Event
+    if err := db.First(&event, id).Error; err != nil {
+        c.JSON(404, gin.H{
+            "error": "Event not found",
+        })
+        return
+    }
+
+	db.Model(&event).Updates(models.Event{
+		Title: body.Title, 
+		Description: body.Description, 
+		DateTime: body.DateTime, 
+		Location: body.Location,
+	})
+
+    c.JSON(200, gin.H{
+        "Result": event,
+    })
+}
+

@@ -1,9 +1,21 @@
-POST http://localhost:3000/events
+GET http://localhost:3000/events/1
+Content-Type: application/json
+
+###
+
+PUT http://localhost:3000/events/1
 Content-Type: application/json
 
 {
-    "title": "Sample Event",
-    "description": "This is a sample event",
-    "datetime": 
-    "location": "Bandoeng"  
+  "title": "Update Title 8", 
+  "description": "New Desc 3", 
+  "dateTime": "2024-02-25T10:00:00Z",
+  "location": "New Location 7"
 }
+
+# {
+#   "title": "Update Title 3",
+#   "description": "New Desc 3",
+#   "dateTime": "2024-02-25T10:00:00Z",
+#   "location": "New Location 2"
+# }

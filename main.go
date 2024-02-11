@@ -57,6 +57,10 @@ func main() {
 	r.GET("/events/:id", func(c *gin.Context) {
 		controllers.EventsShow(c, db)
 	})
+
+	r.PUT("/events/:id", func(c *gin.Context) {
+		controllers.EventsUpdate(c, db)
+	})
 	
 	r.Run(":" + os.Getenv("PORT")) // Default :8080, take PORT from .env
 }
